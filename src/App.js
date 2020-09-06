@@ -8,14 +8,13 @@ import NominatedListModal from './components/NominatedListModal/NominatedListMod
 function App() {
   
   const [searchResults, setSearchResultsList] = React.useState({});
-  const [nominatedList, setNominatedList] = React.useState([]);
+  const [nominatedList, setNominatedList] = useLocalStorage('cache',[]);
   const [modal, setModal] = React.useState(false);
   const handleSearchResultsChange = useCallback((newSearchResults) => {setSearchResultsList(newSearchResults)});
   const handleNominatedListChange = useCallback((newNominatedList) => {setNominatedList(newNominatedList)});
   const handleModalChange = useCallback(() => setModal(!modal), [modal]);
 
   const handleSearch = (results) => {
-    // probably bad too
     let found = false;
     for(let i = 0; i < nominatedList.length; i++) {
       if(nominatedList[i] === results.Title) {found = true}
@@ -48,6 +47,30 @@ function App() {
       <SearchResults searchResult={searchResults} nominate={nominate} removeNominate={removeNominate}/>
     </div>
   );
+}
+
+function useLocalStorage(key, initialValue) {
+  const [storedValue, setStoredValue] = useState(() => {
+    try {
+      const item = window.localStorage.getItem(key);
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      console.log(error);
+      return initialValue;
+    }
+  });
+
+  const setValue = value => {
+    try {
+      const valueToStore =
+        value instanceof Function ? value(storedValue) : value;
+      setStoredValue(valueToStore);
+      window.localStorage.setItem(key, JSON.stringify(valueToStore));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  return [storedValue, setValue];
 }
 
 export default App;
