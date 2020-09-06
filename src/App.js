@@ -42,11 +42,15 @@ function App() {
     setNominatedList(nominatedList.filter(movie => movie.Title !== searchResults.Title))
   }
 
+  const removeMovie = (removeMovie) => {
+    setNominatedList(nominatedList.filter(movie => movie.Title !== removeMovie.Title))
+  }
+
   return (
     <div className="App">
       <TopBar onClick={handleModalChange}/>
       <h1>{nominatedList.length}</h1>
-      <NominatedListModal show={modal} nominatedList={nominatedList} handleClose={handleModalChange}/>
+      <NominatedListModal show={modal} nominatedList={nominatedList} handleClose={handleModalChange} remove={removeMovie}/>
       <SearchArea onChange={handleSearch}/>
       <SearchResults searchResult={searchResults} nominate={nominate} removeNominate={removeNominate}/>
     </div>

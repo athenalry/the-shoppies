@@ -3,6 +3,9 @@ import {Card, Button, Modal} from '@shopify/polaris';
 import './NominatedListModal.css';
 
 function NominatedListModal (props) {
+    const removeCurrent = (movie) => { 
+      props.remove(movie);
+    }
     return(
         <div className="nominated-list">
           <Modal open={props.show} onClose={props.handleClose}>
@@ -12,7 +15,7 @@ function NominatedListModal (props) {
               <Card title={movie.Title} sectioned>
                 <div className="card-body">
                 <p>{`Year: ${movie.Year}`}</p>
-                <Button>Remove</Button>
+                <Button onClick={() => removeCurrent(movie)}>Remove</Button>
                 </div>
               </Card>
             )
