@@ -10,3 +10,4 @@ Alternatively, you can view this app in production [here](https://the-shoppies-a
 ## Technology
 * React Hooks 
 * Shopify Polaris Components
+* Local Storage (Your nominations persist even after you have left the site!)
