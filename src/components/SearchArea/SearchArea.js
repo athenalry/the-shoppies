@@ -2,15 +2,25 @@ import React, {useCallback, useState} from 'react';
 import {TextField, Select, Button} from '@shopify/polaris';
 import axios from 'axios';
 import './SearchArea.css'
-// Form Validation
 function SearchArea (props) {
     const [title, setTitle] = React.useState("");
     const [type, setType] = React.useState("");
     const [year, setYear] = React.useState("");
 
-    const handleTitleChange = useCallback((newTitle) => setTitle(newTitle), []);
-    const handleTypeChange = useCallback((newType) => setType(newType, []));
-    const handleYearChange = useCallback((newYear) => setYear(newYear), []);
+    const handleTitleChange = (newTitle) => {
+      setTitle(newTitle); 
+      getSearchResults(`http://www.omdbapi.com/?i=tt3896198&apikey=a6494952&t=${newTitle}&type=${type}&y=${year}`);
+    };
+
+    const handleTypeChange = (newType) => {
+      setType(newType)
+      getSearchResults(`http://www.omdbapi.com/?i=tt3896198&apikey=a6494952&t=${title}&type=${newType}&y=${year}`);     
+    };
+
+    const handleYearChange = (newYear) => {
+      setYear(newYear);
+      getSearchResults(`http://www.omdbapi.com/?i=tt3896198&apikey=a6494952&t=${title}&type=${type}&y=${newYear}`);     
+    };
 
     const options = [
       {label: '', value: ''},
@@ -19,10 +29,8 @@ function SearchArea (props) {
       {label: 'Episode', value: 'episode'},
     ];
     
-     
-    const getSearchResults = event => {
-      
-      axios.get(`http://www.omdbapi.com/?i=tt3896198&apikey=&t=${title}&type=${type}&y=${year}`)
+    const getSearchResults = url => {
+      axios.get(url) 
         .then((response) => {
           const movie = response.data;
           console.log(movie);
@@ -33,9 +41,10 @@ function SearchArea (props) {
           console.log(error);
         });
     };
-    
+        
     return (
         <div className="search-area">
+          <h1>{title}</h1>
           <div className="query-box"> 
             <TextField label="Title" value={title} onChange={handleTitleChange} />
           </div>
