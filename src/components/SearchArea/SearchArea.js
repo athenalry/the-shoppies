@@ -10,7 +10,7 @@ function SearchArea (props) {
     const handleTitleChange = (newTitle) => {
       setTitle(newTitle); 
       if(newTitle !== '') {
-        getSearchResults(`http://www.omdbapi.com/?i=tt3896198&apikey=a6494952&t=${newTitle}&type=${type}&y=${year}`);
+        getSearchResults(`https://www.omdbapi.com/?i=tt3896198&apikey=a6494952&t=${newTitle}&type=${type}&y=${year}`);
       } else {
         props.onChange({});
       }
@@ -21,7 +21,7 @@ function SearchArea (props) {
       if(title === '') {
         props.onChange({});
       } else {
-        getSearchResults(`http://www.omdbapi.com/?i=tt3896198&apikey=a6494952&t=${title}&type=${newType}&y=${year}`);   
+        getSearchResults(`https://www.omdbapi.com/?i=tt3896198&apikey=a6494952&t=${title}&type=${newType}&y=${year}`);   
       }
     };
 
@@ -30,7 +30,7 @@ function SearchArea (props) {
       if(title === '') {
         props.onChange({});
       } else {
-        getSearchResults(`http://www.omdbapi.com/?i=tt3896198&apikey=a6494952&t=${title}&type=${type}&y=${newYear}`);   
+        getSearchResults(`https://www.omdbapi.com/?i=tt3896198&apikey=a6494952&t=${title}&type=${type}&y=${newYear}`);   
       }
     };
 
