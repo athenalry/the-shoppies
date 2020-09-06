@@ -11,7 +11,7 @@ function App() {
     Year: "1989",
     nominated: false
   }
-  let [searchResults, setSearchResultsList] = React.useState(testObject);
+  let [searchResults, setSearchResultsList] = React.useState({});
   let [nominatedList, setNominatedList] = React.useState([]);
   const [modal, setModal] = React.useState(false);
   const handleSearchResultsChange = useCallback((newSearchResults) => {setSearchResultsList(newSearchResults)});
@@ -30,11 +30,9 @@ function App() {
   const nominate = event => {
     handleSearchResultsChange({...searchResults, nominated: true});
     handleNominatedListChange([...nominatedList, {Title: searchResults.Title, nominated: true, Year: searchResults.Year}]);
-    console.log(nominatedList.length);
     if(nominatedList.length === 4) {
       alert('You have reached 5 nominations')
     }
-    console.log(searchResults)
   }
 
   const removeNominate = event => {
@@ -49,7 +47,6 @@ function App() {
   return (
     <div className="App">
       <TopBar onClick={handleModalChange}/>
-      <h1>{nominatedList.length}</h1>
       <NominatedListModal show={modal} nominatedList={nominatedList} handleClose={handleModalChange} remove={removeMovie}/>
       <SearchArea onChange={handleSearch}/>
       <SearchResults searchResult={searchResults} nominate={nominate} removeNominate={removeNominate}/>

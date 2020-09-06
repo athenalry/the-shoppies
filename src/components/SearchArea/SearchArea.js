@@ -9,17 +9,29 @@ function SearchArea (props) {
 
     const handleTitleChange = (newTitle) => {
       setTitle(newTitle); 
-      getSearchResults(`http://www.omdbapi.com/?i=tt3896198&apikey=a6494952&t=${newTitle}&type=${type}&y=${year}`);
+      if(newTitle !== '') {
+        getSearchResults(`http://www.omdbapi.com/?i=tt3896198&apikey=a6494952&t=${newTitle}&type=${type}&y=${year}`);
+      } else {
+        props.onChange({});
+      }
     };
 
     const handleTypeChange = (newType) => {
-      setType(newType)
-      getSearchResults(`http://www.omdbapi.com/?i=tt3896198&apikey=a6494952&t=${title}&type=${newType}&y=${year}`);     
+      setType(newType);
+      if(title === '') {
+        props.onChange({});
+      } else {
+        getSearchResults(`http://www.omdbapi.com/?i=tt3896198&apikey=a6494952&t=${title}&type=${newType}&y=${year}`);   
+      }
     };
 
     const handleYearChange = (newYear) => {
       setYear(newYear);
-      getSearchResults(`http://www.omdbapi.com/?i=tt3896198&apikey=a6494952&t=${title}&type=${type}&y=${newYear}`);     
+      if(title === '') {
+        props.onChange({});
+      } else {
+        getSearchResults(`http://www.omdbapi.com/?i=tt3896198&apikey=a6494952&t=${title}&type=${type}&y=${newYear}`);   
+      }
     };
 
     const options = [
@@ -33,7 +45,6 @@ function SearchArea (props) {
       axios.get(url) 
         .then((response) => {
           const movie = response.data;
-          console.log(movie);
           props.onChange(movie);
         })
         .catch((error) => {
@@ -44,7 +55,6 @@ function SearchArea (props) {
         
     return (
         <div className="search-area">
-          <h1>{title}</h1>
           <div className="query-box"> 
             <TextField label="Title" value={title} onChange={handleTitleChange} />
           </div>

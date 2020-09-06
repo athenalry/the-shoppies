@@ -1,4 +1,4 @@
-npm i @shopify/polaris react-bootstrap axios bootstrap
+npm i @shopify/polaris axios 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
