@@ -27,7 +27,7 @@ function App() {
 
   const nominate = event => {
     handleSearchResultsChange({...searchResults, nominated: true});
-    handleNominatedListChange([...nominatedList, searchResults]);
+    handleNominatedListChange([...nominatedList, {Title: searchResults.Title, nominated: true, Year: searchResults.Year}]);
     console.log(nominatedList.length);
     if(nominatedList.length === 4) {
       alert('You have reached 5 nominations')
@@ -37,7 +37,7 @@ function App() {
 
   const removeNominate = event => {
     handleSearchResultsChange({...searchResults, nominated: false});
-    setNominatedList(nominatedList.filter(movie => movie !== searchResults))
+    setNominatedList(nominatedList.filter(movie => movie.Title !== searchResults.Title))
   }
 
   return (
