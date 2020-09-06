@@ -1,11 +1,12 @@
 import React from 'react';
 import {Card, Button, Modal} from '@shopify/polaris';
 import './NominatedListModal.css';
-
+// pop-up modal that shows your current nominations and allows you to remove them
 function NominatedListModal (props) {
     const removeCurrent = (movie) => { 
       props.remove(movie);
     }
+    
     return(
         <div className="nominated-list">
           <Modal open={props.show} onClose={props.handleClose}>

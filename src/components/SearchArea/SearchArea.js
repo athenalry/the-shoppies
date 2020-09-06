@@ -3,10 +3,13 @@ import {TextField, Select, Button} from '@shopify/polaris';
 import axios from 'axios';
 import './SearchArea.css'
 function SearchArea (props) {
+    // title, type, year users search for 
     const [title, setTitle] = React.useState("");
     const [type, setType] = React.useState("");
     const [year, setYear] = React.useState("");
 
+    // updates the search results as the title/type/year changes
+    // if the title's empty, be sure to make the search result an empty object 
     const handleTitleChange = (newTitle) => {
       setTitle(newTitle); 
       if(newTitle !== '') {
@@ -34,13 +37,6 @@ function SearchArea (props) {
       }
     };
 
-    const options = [
-      {label: '', value: ''},
-      {label: 'Movie', value: 'movie'},
-      {label: 'Series', value: 'series'},
-      {label: 'Episode', value: 'episode'},
-    ];
-    
     const getSearchResults = url => {
       axios.get(url) 
         .then((response) => {
@@ -52,7 +48,14 @@ function SearchArea (props) {
           console.log(error);
         });
     };
-        
+
+    const options = [
+      {label: '', value: ''},
+      {label: 'Movie', value: 'movie'},
+      {label: 'Series', value: 'series'},
+      {label: 'Episode', value: 'episode'},
+    ];
+    
     return (
         <div className="search-area">
           <div className="query-box"> 

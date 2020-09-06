@@ -6,10 +6,12 @@ import SearchArea from './components/SearchArea/SearchArea';
 import NominatedListModal from './components/NominatedListModal/NominatedListModal';
 
 function App() {
-  
+  // searchResults, nominatedList and modal are all essential parts of the state
+  // they have respective handlers when changes occur
   const [searchResults, setSearchResultsList] = React.useState({});
   const [nominatedList, setNominatedList] = useLocalStorage('cache',[]);
   const [modal, setModal] = React.useState(false);
+
   const handleSearchResultsChange = useCallback((newSearchResults) => {setSearchResultsList(newSearchResults)});
   const handleNominatedListChange = useCallback((newNominatedList) => {setNominatedList(newNominatedList)});
   const handleModalChange = useCallback(() => setModal(!modal), [modal]);
@@ -17,11 +19,15 @@ function App() {
   const handleSearch = (results) => {
     let found = false;
     for(let i = 0; i < nominatedList.length; i++) {
-      if(nominatedList[i] === results.Title) {found = true}
+      if(nominatedList[i] === results.Title) {
+        found = true;
+      }
     }
     setSearchResultsList({...results, nominated: found});
   };
 
+  // nominate and removeNominate are functions that allows you to add/remove from nominate list when you have searched up the specific movie 
+  // removeMovie allows you to remove movies from the nomination list popup
   const nominate = event => {
     handleSearchResultsChange({...searchResults, nominated: true});
     handleNominatedListChange([...nominatedList, {Title: searchResults.Title, nominated: true, Year: searchResults.Year}]);
@@ -49,6 +55,7 @@ function App() {
   );
 }
 
+// Custom React Hook that allows the nomination list to be fetched from local memory, persists state through the use of localStorage
 function useLocalStorage(key, initialValue) {
   const [storedValue, setStoredValue] = useState(() => {
     try {
