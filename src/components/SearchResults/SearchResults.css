@@ -1,0 +1,10 @@
+.search-results {
+    width: 80%;
+    margin: 20px auto;
+}
+
+.search-results .card-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

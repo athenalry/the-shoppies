@@ -1,0 +1,16 @@
+.search-area {
+    width: 80%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.search-area .query-box {
+    margin: 10px;
+}
+
+.search-area .search-button {
+    margin: 33px 10px;
+    vertical-align: center;
+}
