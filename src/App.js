@@ -2,7 +2,8 @@ import React, {useCallback, useState, useEffect, useContext} from 'react';
 import './App.css';
 import TopBar from './components/TopBar/TopBar';
 import SearchResults from './components/SearchResults/SearchResults';
-import SearchArea from './components/SearchArea/SearchArea';
+import SearchArea from './components/SearchArea/SearchArea'; 
+import NominatedListModal from './components/NominatedListModal/NominatedListModal';
 
 function App() {
   const testObject = {
@@ -12,9 +13,10 @@ function App() {
   }
   let [searchResults, setSearchResultsList] = React.useState(testObject);
   let [nominatedList, setNominatedList] = React.useState([]);
-
+  const [modal, setModal] = React.useState(false);
   const handleSearchResultsChange = useCallback((newSearchResults) => {setSearchResultsList(newSearchResults)});
   const handleNominatedListChange = useCallback((newNominatedList) => {setNominatedList(newNominatedList)});
+  const handleModalChange = useCallback(() => setModal(!modal), [modal]);
 
   const handleSearch = (results) => {
     // probably bad too
@@ -42,8 +44,9 @@ function App() {
 
   return (
     <div className="App">
-      <TopBar />
+      <TopBar onClick={handleModalChange}/>
       <h1>{nominatedList.length}</h1>
+      <NominatedListModal show={modal} nominatedList={nominatedList} handleClose={handleModalChange}/>
       <SearchArea onChange={handleSearch}/>
       <SearchResults searchResult={searchResults} nominate={nominate} removeNominate={removeNominate}/>
     </div>

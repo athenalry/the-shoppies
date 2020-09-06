@@ -3,12 +3,16 @@ import './TopBar.css';
 import logo from '../../assets/logo.svg';
 import {Button} from '@shopify/polaris';
 
-function TopBar () {
+function TopBar (props) {
+    const viewNominations = event => {
+        props.onClick();
+    }
+
     return (
         <div className="top-bar">
             <img src={logo} alt="No Image Found"/>
             <div className="nominated-button">
-                <Button>View Nominated</Button>
+                <Button onClick={viewNominations}>View Nominated</Button>
             </div>
         </div>
     );
