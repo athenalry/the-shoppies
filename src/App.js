@@ -22,9 +22,7 @@ function App() {
     for(let i = 0; i < nominatedList.length; i++) {
       if(nominatedList[i] === results.Title) {found = true}
     }
-    
     setSearchResultsList({...results, nominated: found});
-    //console.log('Successfully passed')
   };
 
   const nominate = event => {
@@ -34,16 +32,20 @@ function App() {
     if(nominatedList.length === 4) {
       alert('You have reached 5 nominations')
     }
-    //console.log(searchResults)
+    console.log(searchResults)
   }
-  //      <h1>{JSON.stringify(searchResults)}</h1>
 
+  const removeNominate = event => {
+    handleSearchResultsChange({...searchResults, nominated: false});
+    setNominatedList(nominatedList.filter(movie => movie !== searchResults.Title))
+  }
+  
   return (
     <div className="App">
       <TopBar />
-      
+      <h1>{nominatedList.length}</h1>
       <SearchArea onChange={handleSearch}/>
-      <SearchResults searchResult={searchResults} nominate={nominate}/>
+      <SearchResults searchResult={searchResults} nominate={nominate} removeNominate={removeNominate}/>
     </div>
   );
 }

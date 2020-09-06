@@ -8,3 +8,9 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
+
+.search-results .button-collection {
+    display: flex;
+    flex-direction: column;
+}

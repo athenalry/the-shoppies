@@ -1,4 +1,12 @@
 .top-bar {
     background: #00235b;
-    height: 10vh;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.top-bar .nominated-button {
+    margin: auto 10px;
+    vertical-align: center;
 }

@@ -5,7 +5,9 @@ function SearchResults (props) {
     const onClickNominate = event => {
         props.nominate(event);
     }
-
+    const onClickRemoveNominate = event => {
+        props.removeNominate(event);
+    }
     if(!props.searchResult.Title) {
         return(
             <div className="search-results">
@@ -18,7 +20,9 @@ function SearchResults (props) {
                 <Card title={props.searchResult.Title} sectioned>
                     <div className="card-body">
                         <p>{`Year: ${props.searchResult.Year}`}</p>
-                        <Button onClick={onClickNominate}>Nominate</Button>
+                        <div className="button-collection">
+                            <Button onClick={onClickNominate}>Nominate</Button>
+                        </div>
                     </div>
                 </Card>
             </div>
@@ -29,7 +33,9 @@ function SearchResults (props) {
                 <Card title={props.searchResult.Title} sectioned>
                     <div className="card-body">
                         <p>{`Year: ${props.searchResult.Year}`}</p>
-                        <Button disabled={true}>Nominate</Button>
+                        <div className="button-collection">
+                            <Button onClick={onClickRemoveNominate}>Remove Nomination</Button>
+                        </div>
                     </div>
                 </Card>
             </div>
