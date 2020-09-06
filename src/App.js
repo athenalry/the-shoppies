@@ -6,13 +6,9 @@ import SearchArea from './components/SearchArea/SearchArea';
 import NominatedListModal from './components/NominatedListModal/NominatedListModal';
 
 function App() {
-  const testObject = {
-    Title: "Catching Fire",
-    Year: "1989",
-    nominated: false
-  }
-  let [searchResults, setSearchResultsList] = React.useState({});
-  let [nominatedList, setNominatedList] = React.useState([]);
+  
+  const [searchResults, setSearchResultsList] = React.useState({});
+  const [nominatedList, setNominatedList] = React.useState([]);
   const [modal, setModal] = React.useState(false);
   const handleSearchResultsChange = useCallback((newSearchResults) => {setSearchResultsList(newSearchResults)});
   const handleNominatedListChange = useCallback((newNominatedList) => {setNominatedList(newNominatedList)});
