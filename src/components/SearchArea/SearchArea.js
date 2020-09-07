@@ -47,7 +47,6 @@ function SearchArea (props) {
           if(movies.Search) {
             movies = movies.Search;
           }
-          console.log(movies)
           props.onChange(movies);
         })
         .catch((error) => {

@@ -34,7 +34,6 @@ function App() {
       newResults[i].nominated = found;
       setSearchResultsList(newResults);
     }
-    //setSearchResultsList({...results, nominated: found});
   };
 
   // nominate  allows you to add to the nominate list when you have searched up the specific movie 
