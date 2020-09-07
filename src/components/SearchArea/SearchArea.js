@@ -12,32 +12,19 @@ function SearchArea (props) {
     const changeYear = useCallback((newYear) => {setYear(newYear)}, [year]); 
 
     // updates the search results as the title/type/year changes
-    // if the title's empty, be sure to make the search result an empty object 
     const handleTitleChange = (newTitle) => {
       changeTitle(newTitle);
-      if(newTitle !== '') {
-        getSearchResults(`https://www.omdbapi.com/?i=tt3896198&apikey=a6494952&s=${newTitle}&type=${type}&y=${year}`);
-      } else {
-        props.onChange({});
-      }
+      getSearchResults(`https://www.omdbapi.com/?i=tt3896198&apikey=a6494952&s=${newTitle}&type=${type}&y=${year}`);
     };
 
     const handleTypeChange = (newType) => {
       changeType(newType);
-      if(title === '') {
-        props.onChange({});
-      } else {
-        getSearchResults(`https://www.omdbapi.com/?i=tt3896198&apikey=a6494952&s=${title}&type=${newType}&y=${year}`);   
-      }
+      getSearchResults(`https://www.omdbapi.com/?i=tt3896198&apikey=a6494952&s=${title}&type=${newType}&y=${year}`);   
     };
 
     const handleYearChange = (newYear) => {
       changeYear(newYear);
-      if(title === '') {
-        props.onChange({});
-      } else {
-        getSearchResults(`https://www.omdbapi.com/?i=tt3896198&apikey=a6494952&s=${title}&type=${type}&y=${newYear}`);   
-      }
+      getSearchResults(`https://www.omdbapi.com/?i=tt3896198&apikey=a6494952&s=${title}&type=${type}&y=${newYear}`);   
     };
 
     const getSearchResults = url => {
@@ -73,11 +60,17 @@ function SearchArea (props) {
           <div className="query-box"> 
             <Select label="Type of Film" options={options} value={type} onChange={handleTypeChange} />
           </div>
-          <div className="search-button">
-            <Button onClick={getSearchResults}>Search</Button>
-          </div>
+          
         </div>
     );
+
+    /*
+    If you want to save API Calls, you can use this button instead, and get replace the handleXXXChange methods with changeXXX
+    This way, an API request will only be sent when you click the button below
+    <div className="search-button">
+      <Button onClick={() => getSearchResults(`https://www.omdbapi.com/?i=tt3896198&apikey=a6494952&s=${title}&type=${type}&y=${year}`)}>Search</Button>
+    </div>
+    */
 }
 
 export default SearchArea;
