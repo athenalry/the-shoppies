@@ -12,8 +12,8 @@ function App() {
   const [nominatedList, setNominatedList] = useLocalStorage('cache',[]);
   const [modal, setModal] = React.useState(false);
 
-  const handleSearchResultsChange = useCallback((newSearchResults) => {setSearchResultsList(newSearchResults)});
-  const handleNominatedListChange = useCallback((newNominatedList) => {setNominatedList(newNominatedList)});
+  const handleSearchResultsChange = useCallback((newSearchResults) => {setSearchResultsList(newSearchResults)}, [searchResults]);
+  const handleNominatedListChange = useCallback((newNominatedList) => {setNominatedList(newNominatedList)}, [nominatedList]);
   const handleModalChange = useCallback(() => setModal(!modal), [modal]);
 
   const handleSearch = (results) => {
@@ -38,11 +38,15 @@ function App() {
 
   const removeNominate = event => {
     handleSearchResultsChange({...searchResults, nominated: false});
-    setNominatedList(nominatedList.filter(movie => movie.Title !== searchResults.Title))
+    handleNominatedListChange(nominatedList.filter(movie => movie.Title !== searchResults.Title))
   }
 
   const removeMovie = (removeMovie) => {
-    setNominatedList(nominatedList.filter(movie => movie.Title !== removeMovie.Title))
+    if(searchResults.Title === removeMovie.Title) {
+      handleSearchResultsChange({...searchResults, nominated: false});
+
+    }
+    handleNominatedListChange(nominatedList.filter(movie => movie.Title !== removeMovie.Title))
   }
 
   return (
