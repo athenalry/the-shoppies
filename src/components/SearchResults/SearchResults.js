@@ -11,11 +11,7 @@ function SearchResults (props) {
         props.nominate(event);
     }
 
-    const onClickRemoveNominate = event => {
-        props.removeNominate(event);
-    }
-
-    if(props.searchResult.length === 0) {
+    if(props.searchResult.Error) {
         return(
             <div className="search-results">
                 <p>{props.searchResult.Error || "No results found"}</p>

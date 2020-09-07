@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
 import {TextField, Select, Button} from '@shopify/polaris';
 import axios from 'axios';
 import './SearchArea.css'
@@ -7,11 +7,14 @@ function SearchArea (props) {
     const [title, setTitle] = React.useState("");
     const [type, setType] = React.useState("");
     const [year, setYear] = React.useState("");
+    const changeTitle = useCallback((newTitle) => {setTitle(newTitle)}, [title]); 
+    const changeType = useCallback((newType) => {setType(newType)}, [type]); 
+    const changeYear = useCallback((newYear) => {setYear(newYear)}, [year]); 
 
     // updates the search results as the title/type/year changes
     // if the title's empty, be sure to make the search result an empty object 
     const handleTitleChange = (newTitle) => {
-      setTitle(newTitle); 
+      changeTitle(newTitle);
       if(newTitle !== '') {
         getSearchResults(`https://www.omdbapi.com/?i=tt3896198&apikey=a6494952&s=${newTitle}&type=${type}&y=${year}`);
       } else {
@@ -20,7 +23,7 @@ function SearchArea (props) {
     };
 
     const handleTypeChange = (newType) => {
-      setType(newType);
+      changeType(newType);
       if(title === '') {
         props.onChange({});
       } else {
@@ -29,7 +32,7 @@ function SearchArea (props) {
     };
 
     const handleYearChange = (newYear) => {
-      setYear(newYear);
+      changeYear(newYear);
       if(title === '') {
         props.onChange({});
       } else {

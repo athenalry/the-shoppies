@@ -1,4 +1,4 @@
-import React, {useCallback, useState, useEffect, useContext} from 'react';
+import React, {useCallback, useState} from 'react';
 import './App.css';
 import TopBar from './components/TopBar/TopBar';
 import SearchResults from './components/SearchResults/SearchResults';
@@ -17,6 +17,10 @@ function App() {
   const handleModalChange = useCallback(() => setModal(!modal), [modal]);
 
   const handleSearch = (results) => {
+    if(results.Error) {
+      handleSearchResultsChange(results);
+      return;
+    }
     for(let i = 0; i < results.length; i++) {
       let found = false;
 
