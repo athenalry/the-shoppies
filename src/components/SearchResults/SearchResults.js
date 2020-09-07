@@ -15,40 +15,32 @@ function SearchResults (props) {
         props.removeNominate(event);
     }
 
-    if(!props.searchResult.Title) {
+    if(props.searchResult.length === 0) {
         return(
             <div className="search-results">
-                <p>No Results To Display</p>
+                <p>{props.searchResult.Error || "No results found"}</p>
             </div>
         )
-    } else if(props.searchResult.nominated === false) {
-        return (
-            <div className="search-results">
-                <Card title={props.searchResult.Title} sectioned>
-                    <div className="card-body">
-                        <p>{`Year: ${props.searchResult.Year}`}</p>
-                        <div className="button-collection">
-                            <Button onClick={onClickNominate}>Nominate</Button>
-                        </div>
-                    </div>
-                </Card>
-            </div>
-        );
     } else {
         return (
             <div className="search-results">
-                <Card title={props.searchResult.Title} sectioned>
-                    <div className="card-body">
-                        <p>{`Year: ${props.searchResult.Year}`}</p>
-                        <div className="button-collection">
-                            <Button onClick={onClickRemoveNominate}>Remove Nomination</Button>
-                        </div>
-                    </div>
-                </Card>
+                {
+                    props.searchResult.map((result, index) => {
+                        return(
+                            <Card title={result.Title} sectioned>
+                                <div className="card-body">
+                                    <p>{`Year: ${result.Year}`}</p>
+                                    <div className="button-collection">
+                                        <Button onClick={() => onClickNominate(result)} disabled={result.nominated}>Nominate</Button>
+                                    </div>
+                                </div>
+                            </Card>
+                        )
+                    })
+                }
             </div>
         );
-    }
-    
+    } 
 }
 
 export default SearchResults;

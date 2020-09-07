@@ -13,7 +13,7 @@ function SearchArea (props) {
     const handleTitleChange = (newTitle) => {
       setTitle(newTitle); 
       if(newTitle !== '') {
-        getSearchResults(`https://www.omdbapi.com/?i=tt3896198&apikey=a6494952&t=${newTitle}&type=${type}&y=${year}`);
+        getSearchResults(`https://www.omdbapi.com/?i=tt3896198&apikey=a6494952&s=${newTitle}&type=${type}&y=${year}`);
       } else {
         props.onChange({});
       }
@@ -24,7 +24,7 @@ function SearchArea (props) {
       if(title === '') {
         props.onChange({});
       } else {
-        getSearchResults(`https://www.omdbapi.com/?i=tt3896198&apikey=a6494952&t=${title}&type=${newType}&y=${year}`);   
+        getSearchResults(`https://www.omdbapi.com/?i=tt3896198&apikey=a6494952&s=${title}&type=${newType}&y=${year}`);   
       }
     };
 
@@ -33,15 +33,19 @@ function SearchArea (props) {
       if(title === '') {
         props.onChange({});
       } else {
-        getSearchResults(`https://www.omdbapi.com/?i=tt3896198&apikey=a6494952&t=${title}&type=${type}&y=${newYear}`);   
+        getSearchResults(`https://www.omdbapi.com/?i=tt3896198&apikey=a6494952&s=${title}&type=${type}&y=${newYear}`);   
       }
     };
 
     const getSearchResults = url => {
       axios.get(url) 
         .then((response) => {
-          const movie = response.data;
-          props.onChange(movie);
+          let movies = response.data;
+          if(movies.Search) {
+            movies = movies.Search;
+          }
+          console.log(movies)
+          props.onChange(movies);
         })
         .catch((error) => {
           console.log('The following error has occurred');

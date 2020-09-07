@@ -8,7 +8,7 @@ import NominatedListModal from './components/NominatedListModal/NominatedListMod
 function App() {
   // searchResults, nominatedList and modal are all essential parts of the state
   // they have respective handlers when changes occur
-  const [searchResults, setSearchResultsList] = React.useState({});
+  const [searchResults, setSearchResultsList] = React.useState([]);
   const [nominatedList, setNominatedList] = useLocalStorage('cache',[]);
   const [modal, setModal] = React.useState(false);
 
@@ -17,36 +17,47 @@ function App() {
   const handleModalChange = useCallback(() => setModal(!modal), [modal]);
 
   const handleSearch = (results) => {
-    let found = false;
-    for(let i = 0; i < nominatedList.length; i++) {
-      if(nominatedList[i] === results.Title) {
-        found = true;
+    for(let i = 0; i < results.length; i++) {
+      let found = false;
+
+      for(let j = 0; j < nominatedList.length; j++) {
+        if(nominatedList[j].Title === results[i].Title) {
+          found = true;          
+          break;
+        }
       }
+      let newResults = results;
+      newResults[i].nominated = found;
+      setSearchResultsList(newResults);
     }
-    setSearchResultsList({...results, nominated: found});
+    //setSearchResultsList({...results, nominated: found});
   };
 
-  // nominate and removeNominate are functions that allows you to add/remove from nominate list when you have searched up the specific movie 
-  // removeMovie allows you to remove movies from the nomination list popup
-  const nominate = event => {
-    handleSearchResultsChange({...searchResults, nominated: true});
-    handleNominatedListChange([...nominatedList, {Title: searchResults.Title, nominated: true, Year: searchResults.Year}]);
+  // nominate  allows you to add to the nominate list when you have searched up the specific movie 
+  const nominate = (movie) => {
+    for(let i = 0; i < searchResults.length; i++) {
+      if(searchResults[i] === movie) {
+        let newResults = [...searchResults];
+        newResults[i].nominated = true;
+        handleSearchResultsChange(newResults);
+      }
+    }    
+    handleNominatedListChange([...nominatedList, {Title: movie.Title, nominated: true, Year: movie.Year}]);
     if(nominatedList.length === 4) {
       alert('You have reached 5 nominations')
     }
   }
 
-  const removeNominate = event => {
-    handleSearchResultsChange({...searchResults, nominated: false});
-    handleNominatedListChange(nominatedList.filter(movie => movie.Title !== searchResults.Title))
-  }
-
-  const removeMovie = (removeMovie) => {
-    if(searchResults.Title === removeMovie.Title) {
-      handleSearchResultsChange({...searchResults, nominated: false});
-
+  // removeMovie from Nomination List
+  const removeMovie = (movie) => {
+    for(let i = 0; i < searchResults.length; i++) {
+      if(searchResults[i].Title === movie.Title) {
+        let newResults = [...searchResults];
+        newResults[i].nominated = false;
+        handleSearchResultsChange(newResults);
+      }
     }
-    handleNominatedListChange(nominatedList.filter(movie => movie.Title !== removeMovie.Title))
+    handleNominatedListChange(nominatedList.filter(m => m.Title !== movie.Title))
   }
 
   return (
@@ -54,7 +65,7 @@ function App() {
       <TopBar onClick={handleModalChange}/>
       <NominatedListModal show={modal} nominatedList={nominatedList} handleClose={handleModalChange} remove={removeMovie}/>
       <SearchArea onChange={handleSearch}/>
-      <SearchResults searchResult={searchResults} nominate={nominate} removeNominate={removeNominate}/>
+      <SearchResults searchResult={searchResults} nominate={nominate}/>
     </div>
   );
 }
